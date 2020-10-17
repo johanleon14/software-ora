@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Index));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.TxPassword = new System.Windows.Forms.TextBox();
+            this.BtDesconectar = new System.Windows.Forms.Button();
+            this.BtConectar = new System.Windows.Forms.Button();
+            this.LbPassword = new System.Windows.Forms.Label();
+            this.TxUsuario = new System.Windows.Forms.TextBox();
+            this.LbUsuario = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -57,73 +57,79 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.TxPassword);
+            this.panel1.Controls.Add(this.BtDesconectar);
+            this.panel1.Controls.Add(this.BtConectar);
+            this.panel1.Controls.Add(this.LbPassword);
+            this.panel1.Controls.Add(this.TxUsuario);
+            this.panel1.Controls.Add(this.LbUsuario);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(12, 14);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(825, 58);
             this.panel1.TabIndex = 0;
             // 
-            // textBox2
+            // TxPassword
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(403, 25);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(125, 22);
-            this.textBox2.TabIndex = 7;
+            this.TxPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxPassword.Location = new System.Drawing.Point(403, 25);
+            this.TxPassword.Name = "TxPassword";
+            this.TxPassword.Size = new System.Drawing.Size(125, 22);
+            this.TxPassword.TabIndex = 7;
+            this.TxPassword.Text = "josejor55";
+            this.TxPassword.UseSystemPasswordChar = true;
             // 
-            // button2
+            // BtDesconectar
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(679, 23);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(128, 26);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Desconectar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.BtDesconectar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtDesconectar.Location = new System.Drawing.Point(607, 23);
+            this.BtDesconectar.Name = "BtDesconectar";
+            this.BtDesconectar.Size = new System.Drawing.Size(160, 26);
+            this.BtDesconectar.TabIndex = 6;
+            this.BtDesconectar.Text = "Desconectar";
+            this.BtDesconectar.UseVisualStyleBackColor = true;
+            this.BtDesconectar.Visible = false;
+            this.BtDesconectar.Click += new System.EventHandler(this.BtDesconectar_Click);
             // 
-            // button1
+            // BtConectar
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(545, 23);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(128, 26);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Conectar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.BtConectar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtConectar.Location = new System.Drawing.Point(607, 23);
+            this.BtConectar.Name = "BtConectar";
+            this.BtConectar.Size = new System.Drawing.Size(160, 26);
+            this.BtConectar.TabIndex = 5;
+            this.BtConectar.Text = "Conectar";
+            this.BtConectar.UseVisualStyleBackColor = true;
+            this.BtConectar.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label3
+            // LbPassword
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(354, 28);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 16);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Clave";
+            this.LbPassword.AutoSize = true;
+            this.LbPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LbPassword.Location = new System.Drawing.Point(354, 28);
+            this.LbPassword.Name = "LbPassword";
+            this.LbPassword.Size = new System.Drawing.Size(43, 16);
+            this.LbPassword.TabIndex = 3;
+            this.LbPassword.Text = "Clave";
             // 
-            // textBox1
+            // TxUsuario
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(83, 25);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(250, 22);
-            this.textBox1.TabIndex = 2;
+            this.TxUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxUsuario.Location = new System.Drawing.Point(83, 25);
+            this.TxUsuario.Name = "TxUsuario";
+            this.TxUsuario.Size = new System.Drawing.Size(250, 22);
+            this.TxUsuario.TabIndex = 2;
+            this.TxUsuario.Text = "wanana";
             // 
-            // label2
+            // LbUsuario
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 27);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Usuario";
+            this.LbUsuario.AutoSize = true;
+            this.LbUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LbUsuario.Location = new System.Drawing.Point(12, 27);
+            this.LbUsuario.Name = "LbUsuario";
+            this.LbUsuario.Size = new System.Drawing.Size(55, 16);
+            this.LbUsuario.TabIndex = 1;
+            this.LbUsuario.Text = "Usuario";
             // 
             // label1
             // 
@@ -275,11 +281,11 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label LbPassword;
+        private System.Windows.Forms.TextBox TxUsuario;
+        private System.Windows.Forms.Label LbUsuario;
+        private System.Windows.Forms.Button BtDesconectar;
+        private System.Windows.Forms.Button BtConectar;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel3;
@@ -291,7 +297,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox TxPassword;
     }
 }
 
