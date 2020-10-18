@@ -40,18 +40,21 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.btnejecutarsql = new System.Windows.Forms.Button();
+            this.btnlimpiarsql = new System.Windows.Forms.Button();
+            this.txtsql = new System.Windows.Forms.RichTextBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.dgv = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -76,7 +79,6 @@
             this.TxPassword.Name = "TxPassword";
             this.TxPassword.Size = new System.Drawing.Size(125, 22);
             this.TxPassword.TabIndex = 7;
-            this.TxPassword.Text = "josejor55";
             this.TxPassword.UseSystemPasswordChar = true;
             // 
             // BtDesconectar
@@ -119,7 +121,7 @@
             this.TxUsuario.Name = "TxUsuario";
             this.TxUsuario.Size = new System.Drawing.Size(250, 22);
             this.TxUsuario.TabIndex = 2;
-            this.TxUsuario.Text = "wanana";
+            this.TxUsuario.TextChanged += new System.EventHandler(this.TxUsuario_TextChanged);
             // 
             // LbUsuario
             // 
@@ -154,6 +156,7 @@
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.treeView1);
             this.panel5.Location = new System.Drawing.Point(14, 12);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(485, 588);
@@ -162,64 +165,61 @@
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.button4);
-            this.panel3.Controls.Add(this.button3);
-            this.panel3.Controls.Add(this.richTextBox1);
+            this.panel3.Controls.Add(this.btnejecutarsql);
+            this.panel3.Controls.Add(this.btnlimpiarsql);
+            this.panel3.Controls.Add(this.txtsql);
             this.panel3.Location = new System.Drawing.Point(558, 116);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(772, 183);
             this.panel3.TabIndex = 2;
             // 
-            // button4
+            // btnejecutarsql
             // 
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(495, 152);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(128, 26);
-            this.button4.TabIndex = 9;
-            this.button4.Text = "Ejecutar";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnejecutarsql.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnejecutarsql.Location = new System.Drawing.Point(495, 152);
+            this.btnejecutarsql.Name = "btnejecutarsql";
+            this.btnejecutarsql.Size = new System.Drawing.Size(128, 26);
+            this.btnejecutarsql.TabIndex = 9;
+            this.btnejecutarsql.Text = "Ejecutar";
+            this.btnejecutarsql.UseVisualStyleBackColor = true;
+            this.btnejecutarsql.Click += new System.EventHandler(this.btnejecutarsql_Click);
             // 
-            // button3
+            // btnlimpiarsql
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(629, 152);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(128, 26);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Limpiar";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnlimpiarsql.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnlimpiarsql.Location = new System.Drawing.Point(629, 152);
+            this.btnlimpiarsql.Name = "btnlimpiarsql";
+            this.btnlimpiarsql.Size = new System.Drawing.Size(128, 26);
+            this.btnlimpiarsql.TabIndex = 7;
+            this.btnlimpiarsql.Text = "Limpiar";
+            this.btnlimpiarsql.UseVisualStyleBackColor = true;
+            this.btnlimpiarsql.Click += new System.EventHandler(this.button3_Click);
             // 
-            // richTextBox1
+            // txtsql
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(10, 12);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(747, 134);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "select * from estudiantes;";
+            this.txtsql.Location = new System.Drawing.Point(10, 12);
+            this.txtsql.Name = "txtsql";
+            this.txtsql.Size = new System.Drawing.Size(747, 134);
+            this.txtsql.TabIndex = 0;
+            this.txtsql.Text = "select * from estudiantes;";
             // 
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.tableLayoutPanel1);
+            this.panel4.Controls.Add(this.dgv);
             this.panel4.Controls.Add(this.label6);
             this.panel4.Location = new System.Drawing.Point(558, 319);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(772, 409);
             this.panel4.TabIndex = 3;
             // 
-            // tableLayoutPanel1
+            // dgv
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 41);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(744, 356);
-            this.tableLayoutPanel1.TabIndex = 10;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Location = new System.Drawing.Point(10, 44);
+            this.dgv.Name = "dgv";
+            this.dgv.Size = new System.Drawing.Size(747, 353);
+            this.dgv.TabIndex = 10;
             // 
             // label6
             // 
@@ -251,6 +251,14 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "SQL";
             // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(0, -1);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(484, 595);
+            this.treeView1.TabIndex = 0;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            // 
             // Index
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -269,9 +277,11 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -293,11 +303,12 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Button btnejecutarsql;
+        private System.Windows.Forms.Button btnlimpiarsql;
+        private System.Windows.Forms.RichTextBox txtsql;
         private System.Windows.Forms.TextBox TxPassword;
+        private System.Windows.Forms.DataGridView dgv;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
 
