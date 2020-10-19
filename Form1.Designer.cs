@@ -39,6 +39,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.tree = new System.Windows.Forms.TreeView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnejecutarsql = new System.Windows.Forms.Button();
             this.btnlimpiarsql = new System.Windows.Forms.Button();
@@ -48,7 +49,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -149,18 +149,26 @@
             this.panel2.Controls.Add(this.panel5);
             this.panel2.Location = new System.Drawing.Point(12, 116);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(517, 612);
+            this.panel2.Size = new System.Drawing.Size(517, 578);
             this.panel2.TabIndex = 1;
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.treeView1);
+            this.panel5.Controls.Add(this.tree);
             this.panel5.Location = new System.Drawing.Point(14, 12);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(485, 588);
+            this.panel5.Size = new System.Drawing.Size(485, 545);
             this.panel5.TabIndex = 0;
+            // 
+            // tree
+            // 
+            this.tree.Location = new System.Drawing.Point(0, -1);
+            this.tree.Name = "tree";
+            this.tree.Size = new System.Drawing.Size(484, 545);
+            this.tree.TabIndex = 0;
+            this.tree.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tree_MouseClick);
             // 
             // panel3
             // 
@@ -201,7 +209,7 @@
             this.txtsql.Name = "txtsql";
             this.txtsql.Size = new System.Drawing.Size(747, 134);
             this.txtsql.TabIndex = 0;
-            this.txtsql.Text = "select * from estudiantes;";
+            this.txtsql.Text = "";
             // 
             // panel4
             // 
@@ -210,7 +218,7 @@
             this.panel4.Controls.Add(this.label6);
             this.panel4.Location = new System.Drawing.Point(558, 319);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(772, 409);
+            this.panel4.Size = new System.Drawing.Size(772, 375);
             this.panel4.TabIndex = 3;
             // 
             // dgv
@@ -218,7 +226,8 @@
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.Location = new System.Drawing.Point(10, 44);
             this.dgv.Name = "dgv";
-            this.dgv.Size = new System.Drawing.Size(747, 353);
+            this.dgv.ReadOnly = true;
+            this.dgv.Size = new System.Drawing.Size(747, 310);
             this.dgv.TabIndex = 10;
             // 
             // label6
@@ -251,18 +260,11 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "SQL";
             // 
-            // treeView1
-            // 
-            this.treeView1.Location = new System.Drawing.Point(0, -1);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(484, 595);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            // 
             // Index
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -273,7 +275,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Index";
-            this.Text = "Form1";
+            this.Text = "Aplicación: Consulta y Administración de una base de datos en Oracle";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -308,7 +311,7 @@
         private System.Windows.Forms.RichTextBox txtsql;
         private System.Windows.Forms.TextBox TxPassword;
         private System.Windows.Forms.DataGridView dgv;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView tree;
     }
 }
 

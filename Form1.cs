@@ -27,7 +27,6 @@ namespace Proyecto_Software_2
                 ora = new OracleConnection("DATA SOURCE = XE; PASSWORD = " + TxPassword.Text + "; USER ID = " + TxUsuario.Text + ";");
                 ora.Open();
                 flag = true;
-                MessageBox.Show("Conectado a la base de datos");
                 BtConectar.Visible = false;
                 TxUsuario.Visible = false;
                 TxPassword.Visible = false;
@@ -35,6 +34,7 @@ namespace Proyecto_Software_2
                 LbUsuario.Text = "Conectado con el usuario " + TxUsuario.Text + ".";
                 BtDesconectar.Visible = true;
                 ora.Close();
+                Tree();
             }
             catch (Exception ex)
             {
@@ -45,7 +45,9 @@ namespace Proyecto_Software_2
 
         private void BtDesconectar_Click(object sender, EventArgs e)
         {
-            ora.Close();
+            limpiarTree();
+            limpiarSesion();
+            limpiar();
             MessageBox.Show("Desconectado de la base de datos");
             flag = false;
             BtDesconectar.Visible = false;
@@ -69,34 +71,28 @@ namespace Proyecto_Software_2
 
         private void btnejecutarsql_Click(object sender, EventArgs e)
         {
-            //ora = new OracleConnection("DATA SOURCE = XE; PASSWORD = sistemas; USER ID = johan;");
-            //string sql = "create sequence secuencia3 increment by -1 start with 100 maxvalue 100 minvalue 0 ";
-
             if (flag == true)
             {
-                // SQL Statement
-                ora.Open();
-
-                string sql = txtsql.Text;
-                OracleCommand cmd = new OracleCommand(sql, ora);
-
                 try
                 {
+                    ora.Open();
+                    string sql = txtsql.Text;
+                    OracleCommand cmd = new OracleCommand(sql, ora);
                     cmd.CommandType = CommandType.Text;
                     OracleDataAdapter adaptador = new OracleDataAdapter();
                     adaptador.SelectCommand = cmd;
                     DataTable tabla = new DataTable();
                     adaptador.Fill(tabla);
                     dgv.DataSource = tabla;
-                    MessageBox.Show("Ejecutado con exito");
+                    ora.Close();
+                    limpiarTree();
+                    Tree();
+                    
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("IOException:" + ex.Message);
-                }
-                finally
-                {
                     ora.Close();
+                    MessageBox.Show("IOException:" + ex.Message+" error en sql");
                 }
             }
             else
@@ -109,11 +105,302 @@ namespace Proyecto_Software_2
         {
             txtsql.Text = "";
             dgv.DataSource = new DataTable();
+            
+        }
+        public void limpiarSesion()
+        {
+            TxUsuario.Text = "";
+            TxPassword.Text = "";
+
+        }
+        public void limpiarTree()
+        {
+            tree.Nodes.Clear();
+        }
+        public void Tree()
+        {
+            
+            try
+            {
+                OracleCommand cmd;
+                OracleDataReader reader;
+
+                //TABLAS
+                TreeNode node1 = new TreeNode("Tablas");
+                ora.Open();
+                cmd = new OracleCommand("SELECT * FROM USER_TABLES", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node1.Nodes.Add(reader.GetString(0));
+                }
+                tree.Nodes.Add(node1);
+                ora.Close();
+
+                //INDICES
+                TreeNode node2 = new TreeNode("Índices");
+                ora.Open();
+                cmd = new OracleCommand("SELECT* FROM USER_INDEXES ORDER BY TABLE_NAME", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node2.Nodes.Add(reader.GetString(0));
+
+                }
+                tree.Nodes.Add(node2);
+                ora.Close();
+
+                //PAQUETES
+                TreeNode node3 = new TreeNode("Paquetes");
+                ora.Open();
+                cmd = new OracleCommand("SELECT * FROM USER_OBJECTS WHERE OBJECT_TYPE='PACKAGE'", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node3.Nodes.Add(reader.GetString(0));
+                }
+                tree.Nodes.Add(node3);
+                ora.Close();
+
+                //PROCEDIMIENTOS
+                TreeNode node4 = new TreeNode("Procedimientos");
+                ora.Open();
+                cmd = new OracleCommand("SELECT OBJECT_NAME FROM USER_OBJECTS WHERE OBJECT_TYPE='PROCEDURE'", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node4.Nodes.Add(reader.GetString(0));
+                }
+                tree.Nodes.Add(node4);
+                ora.Close();
+
+                //FUNCIONES
+                TreeNode node5 = new TreeNode("Funciones");
+                ora.Open();
+                cmd = new OracleCommand("SELECT OBJECT_NAME FROM USER_OBJECTS WHERE OBJECT_TYPE='FUNCTION'", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node5.Nodes.Add(reader.GetString(0));
+                }
+                tree.Nodes.Add(node5);
+                ora.Close();
+
+                //DISPARADORES
+                TreeNode node6 = new TreeNode("Disparadores");
+                ora.Open();
+                cmd = new OracleCommand("SELECT OBJECT_NAME FROM USER_OBJECTS WHERE OBJECT_TYPE='TRIGGER'", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node6.Nodes.Add(reader.GetString(0));
+                }
+                tree.Nodes.Add(node6);
+                ora.Close();
+
+                //SECUENCIAS
+                TreeNode node7 = new TreeNode("Secuencias");
+                ora.Open();
+                cmd = new OracleCommand("SELECT OBJECT_NAME FROM USER_OBJECTS WHERE OBJECT_TYPE='SEQUENCE'", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node7.Nodes.Add(reader.GetString(0));
+                }
+                tree.Nodes.Add(node7);
+                ora.Close();
+
+                //RESTRICCIONES
+                TreeNode node8 = new TreeNode("Restricciones");
+                ora.Open();
+                cmd = new OracleCommand("SELECT  CONSTRAINT_NAME FROM all_constraints where owner = '"+TxUsuario.Text.ToUpper()+"' AND CONSTRAINT_TYPE = 'C' AND CONSTRAINT_NAME NOT LIKE 'BIN$%'", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node8.Nodes.Add(reader.GetString(0));
+                }
+                tree.Nodes.Add(node8);
+                ora.Close();
+
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("IOException:" + ex.Message+" tree");
+            }
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
 
+        private void tree_MouseClick(object sender, MouseEventArgs e)
+        {
+            TreeNode selectedNode = tree.HitTest(e.Location).Node;
+            if (selectedNode != null)
+            {
+                if (selectedNode.FullPath.ToString().Contains("\\"))
+                {
+                    string seleccionado = selectedNode.FullPath;
+                    string[] split = seleccionado.Split('\\');
+                    limpiar();
+                    try
+                    {
+                        OracleCommand cmd;
+                        OracleDataReader reader;
+                        // CUANDO UNA TABLA ES SELECCIONADA
+                        if (split[0].Equals("Tablas"))
+                        {
+                            ora.Open();
+
+                            cmd = new OracleCommand("select COLUMN_NAME,DATA_TYPE,DATA_LENGTH,DATA_PRECISION from ALL_TAB_COLUMNS where table_name = '" + split[1].ToUpper()+"' AND OWNER='"+TxUsuario.Text.ToUpper()+"'", ora);
+                            
+                            cmd.CommandType = CommandType.Text;
+                            reader = cmd.ExecuteReader();
+                            String cadena = "ESTRUCTURA: \n";
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    if (reader.GetString(1).Equals("NUMBER"))
+                                    {
+                                        cadena = cadena + reader.GetString(0) + "\t" + reader.GetString(1) + "\n";
+                                       
+                                    }
+                                    else
+                                    {
+                                        cadena = cadena + reader.GetString(0) + "\t" + reader.GetString(1) + "(" + reader.GetInt32(2) + ")" + "\n";
+                                    }
+
+                                }
+                            }
+                            txtsql.Text = cadena;
+                            ora.Close();
+
+                            ora.Open();
+                            cmd = new OracleCommand("SELECT*FROM " + split[1], ora);
+                            cmd.CommandType = CommandType.Text;
+                            OracleDataAdapter adaptador = new OracleDataAdapter();
+                            reader = cmd.ExecuteReader();
+                            if (reader.HasRows)
+                            {
+                                adaptador.SelectCommand = cmd;
+                                DataTable tabla = new DataTable();
+                                adaptador.Fill(tabla);
+                                dgv.DataSource = tabla;
+                                
+                            }
+                            ora.Close();
+
+
+
+                        }
+                        // CUANDO UN PAQUETE ES SELECCIONADO
+                        if (split[0].Equals("Paquetes"))
+                        {
+                            ora.Open();
+                            cmd = new OracleCommand("select TEXT from ALL_SOURCE WHERE OWNER='" + TxUsuario.Text.ToUpper() + "' AND NAME='" + split[1] + "' AND TYPE='PACKAGE'", ora);
+
+                            cmd.CommandType = CommandType.Text;
+                            reader = cmd.ExecuteReader();
+                            String cadena = "";
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    cadena = cadena + reader.GetString(0) + "\t";
+                                }
+                            }
+                            txtsql.Text = cadena;
+                            ora.Close();
+                        }
+                        // CUANDO UN PROCEDIMIENTO ES SELECCIONADO
+                        if (split[0].Equals("Procedimientos"))
+                        {
+                            ora.Open();
+                            cmd = new OracleCommand("select TEXT from ALL_SOURCE WHERE OWNER='" + TxUsuario.Text.ToUpper() + "' AND NAME='" + split[1] + "' AND TYPE='PROCEDURE'", ora);
+
+                            cmd.CommandType = CommandType.Text;
+                            reader = cmd.ExecuteReader();
+                            String cadena = "";
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    cadena = cadena + reader.GetString(0) + "\t";
+                                }
+                            }
+                            txtsql.Text = cadena;
+                            ora.Close();
+
+                        }
+                        // CUANDO UNA FUNCION ES SELECCIONADA
+                        if (split[0].Equals("Funciones"))
+                        {
+                            ora.Open();
+                            cmd = new OracleCommand("select TEXT from ALL_SOURCE WHERE OWNER='" + TxUsuario.Text.ToUpper() + "' AND NAME='" + split[1] + "' AND TYPE='FUNCTION'", ora);
+
+                            cmd.CommandType = CommandType.Text;
+                            reader = cmd.ExecuteReader();
+                            String cadena = "";
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    cadena = cadena + reader.GetString(0) + "\t";
+                                }
+                            }
+                            txtsql.Text = cadena;
+                            ora.Close();
+
+                        }
+                        // CUANDO UN DISPARADOR ES SELECCIONADO
+                        if (split[0].Equals("Disparadores"))
+                        {
+                            ora.Open();
+                            cmd = new OracleCommand("select TEXT from ALL_SOURCE WHERE OWNER='" + TxUsuario.Text.ToUpper() + "' AND NAME='" + split[1] + "' AND TYPE='TRIGGER'", ora);
+
+                            cmd.CommandType = CommandType.Text;
+                            reader = cmd.ExecuteReader();
+                            String cadena = "";
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    cadena = cadena + reader.GetString(0) + "\t";
+                                }
+                            }
+                            txtsql.Text = cadena;
+                            ora.Close();
+
+
+                        }
+                        // CUANDO UNA RESTRICCION ES SELECCIONADA
+                        if (split[0].Equals("Restricciones"))
+                        {
+                            ora.Open();
+                            cmd = new OracleCommand("SELECT CONSTRAINT_NAME,TABLE_NAME,SEARCH_CONDITION FROM all_constraints  where owner='"+TxUsuario.Text.ToUpper()+"' AND CONSTRAINT_TYPE='C' AND CONSTRAINT_NAME='"+split[1]+"'", ora);
+
+                            cmd.CommandType = CommandType.Text;
+                            reader = cmd.ExecuteReader();
+                            String cadena = "";
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    cadena = "Nombre\t\t" + reader.GetString(0) + "\nUbicación\t" + reader.GetString(1) + "\nCondición\t\t" + reader.GetString(2)+"";
+                                }
+                            }
+                            txtsql.Text = cadena;
+                            ora.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("IOException:" + ex.Message +" tree_clicker");
+                    }   
+                }
+
+            }
         }
     }
 }
