@@ -45,6 +45,7 @@ namespace Proyecto_Software_2
 
         private void BtDesconectar_Click(object sender, EventArgs e)
         {
+            ora.Close();
             limpiarTree();
             limpiarSesion();
             limpiar();
@@ -64,7 +65,7 @@ namespace Proyecto_Software_2
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnlimpiarsql_Click(object sender, EventArgs e)
         {
             limpiar();
         }
@@ -75,8 +76,17 @@ namespace Proyecto_Software_2
             {
                 try
                 {
+                    string[] consulta = txtsql.Text.Split(' ');
+                    consulta[0] = consulta[0].ToLower();
+                    string sql = "";
+                    if (consulta[0].Equals("select") || consulta[0].Equals("insert") || consulta[0].Equals("update") || consulta[0].Equals("drop") || consulta[0].Equals("delete")) {
+                        String aux = txtsql.Text;
+                        sql=aux.TrimEnd(';');
+                    }
+                    else {
+                        sql = txtsql.Text;
+                    }
                     ora.Open();
-                    string sql = txtsql.Text;
                     OracleCommand cmd = new OracleCommand(sql, ora);
                     cmd.CommandType = CommandType.Text;
                     OracleDataAdapter adaptador = new OracleDataAdapter();
@@ -402,5 +412,6 @@ namespace Proyecto_Software_2
 
             }
         }
+
     }
 }

@@ -201,7 +201,7 @@
             this.btnlimpiarsql.TabIndex = 7;
             this.btnlimpiarsql.Text = "Limpiar";
             this.btnlimpiarsql.UseVisualStyleBackColor = true;
-            this.btnlimpiarsql.Click += new System.EventHandler(this.button3_Click);
+            this.btnlimpiarsql.Click += new System.EventHandler(this.btnlimpiarsql_Click);
             // 
             // txtsql
             // 
@@ -264,7 +264,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
