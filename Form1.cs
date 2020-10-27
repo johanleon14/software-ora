@@ -45,7 +45,6 @@ namespace Proyecto_Software_2
 
         private void BtDesconectar_Click(object sender, EventArgs e)
         {
-            ora.Close();
             limpiarTree();
             limpiarSesion();
             limpiar();
