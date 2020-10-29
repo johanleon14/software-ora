@@ -78,7 +78,7 @@ namespace Proyecto_Software_2
                     string[] consulta = txtsql.Text.Split(' ');
                     consulta[0] = consulta[0].ToLower();
                     string sql = "";
-                    if (consulta[0].Equals("select") || consulta[0].Equals("insert") || consulta[0].Equals("update") || consulta[0].Equals("drop") || consulta[0].Equals("delete")) {
+                    if (consulta[0].Equals("select") || consulta[0].Equals("insert") || consulta[0].Equals("update") || consulta[0].Equals("drop") || consulta[0].Equals("delete") || consulta[0].Equals("alter") || consulta[0].Equals("create")) {
                         String aux = txtsql.Text;
                         sql=aux.TrimEnd(';');
                     }
