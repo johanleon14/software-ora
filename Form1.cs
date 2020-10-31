@@ -270,15 +270,33 @@ namespace Proyecto_Software_2
                             {
                                 while (reader.Read())
                                 {
-                                    if (reader.GetString(1).Equals("NUMBER"))
+                                    /*if (reader.GetString(1).Equals("NUMBER"))
                                     {
-                                        cadena = cadena + reader.GetString(0) + "\t" + reader.GetString(1) + "\n";
-                                       
+                                        cadena = cadena + reader.GetString(0) + "\t" + reader.GetString(1)+ "\n";
+
                                     }
                                     else
                                     {
                                         cadena = cadena + reader.GetString(0) + "\t" + reader.GetString(1) + "(" + reader.GetInt32(2) + ")" + "\n";
+                                    }*/
+                                    Console.WriteLine(reader.GetValue(3));
+                                    if (reader.GetString(1).Equals("NUMBER") && !reader.GetValue(3).Equals(""))
+                                    {
+                                        cadena = cadena + reader.GetString(0) + "\t" + reader.GetString(1) + " " + reader.GetValue(3) + "\n";
+
                                     }
+                                    else
+                                    {
+                                        if (reader.GetString(1).Equals("VARCHAR2"))
+                                        {
+                                            cadena = cadena + reader.GetString(0) + "\t" + reader.GetString(1) + "(" + reader.GetInt32(2) + ")" + "\n";
+                                        }
+                                        else
+                                        {
+                                            cadena = cadena + reader.GetString(0) + "\t" + reader.GetString(1) + "\n";
+                                        }
+                                    }
+                                   
 
                                 }
                             }
@@ -402,9 +420,82 @@ namespace Proyecto_Software_2
                             txtsql.Text = cadena;
                             ora.Close();
                         }
+
+                        // CUANDO UN INDICE ES SELECCIONADA
+                        if (split[0].Equals("Índices"))
+                        {
+                            ora.Open();
+                            cmd = new OracleCommand("SELECT INDEX_NAME, TABLE_NAME,UNIQUENESS,TABLESPACE_NAME FROM user_indexes WHERE INDEX_NAME='"+ split[1] + "'", ora);
+
+                            cmd.CommandType = CommandType.Text;
+                            reader = cmd.ExecuteReader();
+                            String cadena = "";
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    cadena = "Nombre\t\t" + reader.GetString(0) + "\nTabla: \t\t"+ reader.GetString(1) + "\nUnicidad: \t" + reader.GetString(2) + "\nTablespace: \t" + reader.GetString(3);
+                                }
+                            }
+                            txtsql.Text = cadena;
+                            ora.Close();
+
+                            ora.Open();
+                            cmd = new OracleCommand("SELECT*FROM user_indexes WHERE INDEX_NAME='" + split[1]+"'", ora);
+                            cmd.CommandType = CommandType.Text;
+                            OracleDataAdapter adaptador = new OracleDataAdapter();
+                            reader = cmd.ExecuteReader();
+                            if (reader.HasRows)
+                            {
+                                adaptador.SelectCommand = cmd;
+                                DataTable tabla = new DataTable();
+                                adaptador.Fill(tabla);
+                                dgv.DataSource = tabla;
+
+                            }
+                            ora.Close();
+                        }
+
+                        // CUANDO UNA SECUENCIA ES SELECCIONADA
+                        if (split[0].Equals("Secuencias"))
+                        {
+                            ora.Open();
+                            cmd = new OracleCommand("SELECT sequence_name,min_value, max_value,increment_by,last_number FROM user_sequences WHERE sequence_name='" + split[1] + "'", ora);
+
+                            cmd.CommandType = CommandType.Text;
+                            reader = cmd.ExecuteReader();
+                            String cadena = "";
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    cadena = "Nombre\t\t" + reader.GetString(0) + "\nValor Min: \t" + reader.GetValue(1) + "\nValor Max: \t" + reader.GetValue(2) + "\nIncremento de: \t" + reader.GetValue(3) + "\nÚltimo Número: \t" + reader.GetValue(4);
+                                }
+                            }
+                            txtsql.Text = cadena;
+                            ora.Close();
+
+                            ora.Open();
+                            cmd = new OracleCommand("SELECT * FROM user_sequences WHERE SEQUENCE_NAME='" + split[1] + "'", ora);
+                            cmd.CommandType = CommandType.Text;
+                            OracleDataAdapter adaptador = new OracleDataAdapter();
+                            reader = cmd.ExecuteReader();
+                            if (reader.HasRows)
+                            {
+                                adaptador.SelectCommand = cmd;
+                                DataTable tabla = new DataTable();
+                                adaptador.Fill(tabla);
+                                dgv.DataSource = tabla;
+
+                            }
+                            ora.Close();
+                        }
+
+
                     }
                     catch (Exception ex)
                     {
+                        ora.Close();
                         MessageBox.Show("IOException:" + ex.Message +" tree_clicker");
                     }   
                 }
