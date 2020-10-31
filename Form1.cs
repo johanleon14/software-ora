@@ -233,7 +233,7 @@ namespace Proyecto_Software_2
                 //TABLESPACE
                 TreeNode node9 = new TreeNode("Tablespace");
                 ora.Open();
-                cmd = new OracleCommand("select tablespace_name from dba_data_files", ora);
+                cmd = new OracleCommand("select distinct tablespace_name from dba_data_files", ora);
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -517,7 +517,7 @@ namespace Proyecto_Software_2
                                 dgv.DataSource = tabla;
 
                             }
-
+                            ora.Close();
                         }
 
 
