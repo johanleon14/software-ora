@@ -230,8 +230,18 @@ namespace Proyecto_Software_2
                 }
                 tree.Nodes.Add(node8);
                 ora.Close();
+                //TABLESPACE
+                TreeNode node9 = new TreeNode("Tablespace");
+                ora.Open();
+                cmd = new OracleCommand("select tablespace_name from dba_data_files", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node9.Nodes.Add(reader.GetString(0));
+                }
+                tree.Nodes.Add(node9);
+                ora.Close();
 
-                
 
 
             }
@@ -489,6 +499,25 @@ namespace Proyecto_Software_2
 
                             }
                             ora.Close();
+                        }
+                        if (split[0].Equals("Tablespace"))
+                        {
+                            ora.Open();
+                            cmd = new OracleCommand("select tablespace_name Nombre, file_name Datafile,status Estado, bytes, round(bytes/1048576) Megabytes from dba_data_files where tablespace_name='" + split[1]+"'", ora);
+
+                            cmd.CommandType = CommandType.Text;
+                            
+                            OracleDataAdapter adaptador = new OracleDataAdapter();
+                            reader = cmd.ExecuteReader();
+                            if (reader.HasRows)
+                            {
+                                adaptador.SelectCommand = cmd;
+                                DataTable tabla = new DataTable();
+                                adaptador.Fill(tabla);
+                                dgv.DataSource = tabla;
+
+                            }
+
                         }
 
 
