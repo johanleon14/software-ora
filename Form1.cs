@@ -42,6 +42,30 @@ namespace Proyecto_Software_2
             }
            
         }
+        private void TxPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((int)e.KeyChar == (int)Keys.Enter)
+            {
+                try
+                {
+                    ora = new OracleConnection("DATA SOURCE = XE; PASSWORD = " + TxPassword.Text + "; USER ID = " + TxUsuario.Text + ";");
+                    ora.Open();
+                    flag = true;
+                    BtConectar.Visible = false;
+                    TxUsuario.Visible = false;
+                    TxPassword.Visible = false;
+                    LbPassword.Visible = false;
+                    LbUsuario.Text = "Conectado con el usuario " + TxUsuario.Text + ".";
+                    BtDesconectar.Visible = true;
+                    ora.Close();
+                    Tree();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("IOException:" + ex.Message);
+                }
+            }
+        }
 
         private void BtDesconectar_Click(object sender, EventArgs e)
         {
@@ -530,11 +554,6 @@ namespace Proyecto_Software_2
                 }
 
             }
-        }
-
-        private void Index_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
