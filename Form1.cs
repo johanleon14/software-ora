@@ -532,5 +532,9 @@ namespace Proyecto_Software_2
             }
         }
 
+        private void Index_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
