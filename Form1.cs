@@ -157,7 +157,17 @@ namespace Proyecto_Software_2
             {
                 OracleCommand cmd;
                 OracleDataReader reader;
-
+                //USUARIOS
+                TreeNode node0 = new TreeNode("Usuarios");
+                ora.Open();
+                cmd = new OracleCommand("select username from dba_users", ora);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    node0.Nodes.Add(reader.GetString(0));
+                }
+                tree.Nodes.Add(node0);
+                ora.Close();
                 //TABLAS
                 TreeNode node1 = new TreeNode("Tablas");
                 ora.Open();
@@ -291,6 +301,24 @@ namespace Proyecto_Software_2
                         OracleCommand cmd;
                         OracleDataReader reader;
                         // CUANDO UNA TABLA ES SELECCIONADA
+                        if (split[0].Equals("Usuarios"))
+                        {
+                            ora.Open();
+                            cmd = new OracleCommand("select du.USERNAME, du.ACCOUNT_STATUS,du.DEFAULT_TABLESPACE, du.LAST_LOGIN, dsp.PRIVILEGE from dba_users du, dba_sys_privs dsp where du.USERNAME=dsp.GRANTEE and username='" + split[1]+"' ", ora);
+                            cmd.CommandType = CommandType.Text;
+
+                            OracleDataAdapter adaptador = new OracleDataAdapter();
+                            reader = cmd.ExecuteReader();
+                            if (reader.HasRows)
+                            {
+                                adaptador.SelectCommand = cmd;
+                                DataTable tabla = new DataTable();
+                                adaptador.Fill(tabla);
+                                dgv.DataSource = tabla;
+                            }
+                            ora.Close();
+                        }
+
                         if (split[0].Equals("Tablas"))
                         {
                             ora.Open();
