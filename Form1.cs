@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.OracleClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -481,6 +482,21 @@ namespace Proyecto_Software_2
                             }
                             txtsql.Text = cadena;
                             ora.Close();
+
+                            ora.Open();
+                            cmd = new OracleCommand("SELECT * FROM all_constraints  where owner='" + TxUsuario.Text.ToUpper() + "' AND CONSTRAINT_TYPE='C' AND CONSTRAINT_NAME='" + split[1] + "'", ora);
+                            cmd.CommandType = CommandType.Text;
+                            OracleDataAdapter adaptador = new OracleDataAdapter();
+                            reader = cmd.ExecuteReader();
+                            if (reader.HasRows)
+                            {
+                                adaptador.SelectCommand = cmd;
+                                DataTable tabla = new DataTable();
+                                adaptador.Fill(tabla);
+                                dgv.DataSource = tabla;
+
+                            }
+                            ora.Close();
                         }
 
                         // CUANDO UN INDICE ES SELECCIONADA
@@ -496,7 +512,7 @@ namespace Proyecto_Software_2
                             {
                                 while (reader.Read())
                                 {
-                                    cadena = "Nombre\t\t" + reader.GetString(0) + "\nTabla: \t\t"+ reader.GetString(1) + "\nUnicidad: \t" + reader.GetString(2) + "\nTablespace: \t" + reader.GetString(3);
+                                    cadena = "Nombre\t" + reader.GetString(0) + "\nTabla: \t\t"+ reader.GetString(1) + "\nUnicidad: \t" + reader.GetString(2) + "\nTablespace: \t" + reader.GetString(3);
                                 }
                             }
                             txtsql.Text = cadena;
@@ -554,6 +570,33 @@ namespace Proyecto_Software_2
                         }
                         if (split[0].Equals("Tablespace"))
                         {
+                            ora.Open();
+                            cmd = new OracleCommand("select tablespace_name Nombre, file_name Datafile, online_status Estado, bytes, round(bytes / 1048576) Megabytes from dba_data_files where tablespace_name = '" + split[1]+"'", ora);
+
+                            cmd.CommandType = CommandType.Text;
+                            reader = cmd.ExecuteReader();
+                            String cadena = "";
+                            bool flag = false;
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                   
+                                    if (flag == false)
+                                    {
+                                        cadena = "create tablespace "+ reader.GetString(0) + " DATAFILE '"+ reader.GetString(1) + "' size "+ reader.GetInt64(4) + "M "+ reader.GetString(2) + " \n";
+                                        flag = true;
+                                    }
+                                    else
+                                    {
+                                        cadena =cadena+"alter tablespace "+ reader.GetString(0) + " ADD DATAFILE '"+ reader.GetString(1) + "' size " + reader.GetInt64(4) + "M";
+                                    }
+                                }
+                            }
+                            txtsql.Text = cadena;
+                            ora.Close();
+
+
                             ora.Open();
                             cmd = new OracleCommand("select tablespace_name Nombre, file_name Datafile,status Estado, bytes, round(bytes/1048576) Megabytes from dba_data_files where tablespace_name='" + split[1]+"'", ora);
 
